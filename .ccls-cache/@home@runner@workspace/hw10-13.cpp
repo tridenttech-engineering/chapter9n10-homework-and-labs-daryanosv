@@ -7,7 +7,7 @@
 using namespace std;
 
 //function prototype
-void getPayment(int prin, double monthRate, int months);
+void getPayment(int prin, double monthRate, int months, double &payment);
 
 int main()
 {
@@ -32,10 +32,10 @@ int main()
     cin >> term;
 
     //call function to calculate payments
-    creditPayment = getPayment(carPrice - rebate,
-        creditRate / 12, term * 12);
-    dealerPayment = getPayment(carPrice, 
-        dealerRate / 12, term * 12);    //assign values to calculate payments
+    getPayment(carPrice - rebate,
+        creditRate / 12, term * 12, creditPayment);
+    getPayment(carPrice, 
+        dealerRate / 12, term * 12, dealerPayment);    //assign values to calculate payments
     
     //display payments
     cout << fixed << setprecision(2) << endl; 
@@ -48,10 +48,9 @@ int main()
 }//end of main function    
 
     //*****function definitions*****
-void getPayment(int prin, double monthRate, int months)
+void getPayment(int prin, double monthRate, int months, double &payment)
 {
-    //calculates and returns a monthly payment
-    double monthPay = 0.0;
-    monthPay = prin * monthRate / 
+    //calculates and stores the monthly payment in the reference parameter
+    payment = prin * monthRate / 
         (1 - pow(monthRate + 1, -months));
 } //end of getPayment function//*****function definition*****

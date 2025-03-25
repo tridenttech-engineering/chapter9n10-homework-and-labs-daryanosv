@@ -8,6 +8,7 @@ using namespace std;
 
 //function prototype
 double getPayment(int, double, int);
+double getTotal(double, int);
 
 int main()
 {
@@ -19,6 +20,8 @@ int main()
     int term = 0;
     double creditPayment = 0.0;
     double dealerPayment = 0.0;
+    double totalCredit=0.0;
+    double totalDealer=0.0;
 
     cout << "Car price (after any trade-in): ";
     cin >> carPrice;
@@ -35,14 +38,19 @@ int main()
     creditPayment = getPayment(carPrice - rebate,
         creditRate / 12, term * 12);
     dealerPayment = getPayment(carPrice, 
-        dealerRate / 12, term * 12);    //assign values to calculate payments
+        dealerRate / 12, term * 12);   
+    totalDealer = getTotal(dealerPayment, term * 12);
+    totalCredit = getTotal(creditPayment, term * 12);
 
     //display payments
     cout << fixed << setprecision(2) << endl; 
-    cout << "Credit union payment: $" 
+    cout << "Credit union monthly payment: $" 
         << creditPayment << endl;
+    cout << "Credit union total cost: $"<< totalCredit << endl;
+    
     cout << "Dealer payment: $"
         << dealerPayment << endl;
+    cout << "Dealer total cost: $" << totalDealer << endl;
 
     return 0;
 }//end of main function    
@@ -57,4 +65,14 @@ double getPayment(int prin,
     monthPay = prin * monthRate / 
         (1 - pow(monthRate + 1, -months));
     return monthPay;
-} //end of getPayment function//*****function definition*****
+} 
+//total amount
+double getTotal(double monthPay, int months)
+{
+    double total = 0.0;
+    double roundedPay = 0.0;
+
+    roundedPay = static_cast<int>((monthPay + .005) * 100) / 100.0;
+    total = roundedPay * months;
+    return total;
+} 
